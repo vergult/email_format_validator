@@ -1,6 +1,5 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "email_format_validator/version"
 
 Gem::Specification.new do |s|
   s.name        = "email_format_validator"
