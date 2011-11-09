@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.version     = "0.0.1"
   s.authors     = ["Axel Vergult"]
   s.email       = ["axel.vergult@gmail.com"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/episko/email_format_validator"
   s.summary     = %q{A Rails 3 email format validator following the RFC 822}
   s.description = %q{A Rails 3 email format validator following the RFC 822}
 
