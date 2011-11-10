@@ -82,7 +82,7 @@ class TestEmailFormatValidator < MiniTest::Unit::TestCase
   def test_default_message_on_error
     test_user = TestUser.new(:email => "invalid_email@")
     refute test_user.valid?
-    assert test_user.errors[:email].include?("is not formatted properly")
+    assert test_user.errors[:email].include?("is invalid")
   end
 
   def test_custom_message_on_error

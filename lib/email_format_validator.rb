@@ -21,7 +21,7 @@ class EmailFormatValidator < ActiveModel::EachValidator
 
   def validate_each(record, attribute, value)
     unless value =~ Patterns::EMAIL
-      record.errors[attribute] << (options[:message] || "is not formatted properly")
+      record.errors.add(attribute, options[:message] || :invalid)
     end
   end
 
