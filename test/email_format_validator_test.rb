@@ -7,7 +7,7 @@ class TestUser < TestModel
 end
 
 class TestUserWithRfcCompliantEmail < TestModel
-  validates :email, :email_format => { :rfc_compliant => true }
+  validates :email, :email_format => { :rfc => true }
 end
 
 class TestUserAllowsNilToTrue < TestModel

@@ -12,10 +12,20 @@ Then run:
 Usage
 -----
 
-Add the following to one of your model:
+Add the following to one of your models:
 
     validates :email, :email_format => true
     
+You can turn on RFC 822 compliant email verification by passing on:
+
+    validates :email, :email_format => { :rfc => true }
+
+Be aware that this is disabled by default as websites will often need a less permissive email check than the RFC one (check out tests for more details).
+
+You can also modify the default message if validation fails:
+
+    validates :email, :email_format => { :message => "is not formatted properly" }
+
 Tests
 -----
 

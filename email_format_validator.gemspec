@@ -3,12 +3,12 @@ $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "email_format_validator"
-  s.version     = "0.0.1"
+  s.version     = "0.0.2"
   s.authors     = ["Axel Vergult"]
   s.email       = ["axel.vergult@gmail.com"]
   s.homepage    = "https://github.com/episko/email_format_validator"
-  s.summary     = %q{A Rails 3 email format validator following the RFC 822}
-  s.description = %q{A Rails 3 email format validator following the RFC 822}
+  s.summary     = %q{A Rails 3 email format validator with RFC 822 compliant option}
+  s.description = %q{A Rails 3 email format validator with RFC 822 compliant option}
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
