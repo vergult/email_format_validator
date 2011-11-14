@@ -19,7 +19,7 @@ class TestUserAllowsNilToFalse < TestModel
 end
 
 class TestUserWithMessage < TestModel
-  validates :email, :email_format => { :message => 'is not formatted properly' }
+  validates :email, :email_format => { :message => 'is not well formatted' }
 end
 
 class TestEmailFormatValidator < MiniTest::Unit::TestCase
@@ -172,13 +172,13 @@ class TestEmailFormatValidator < MiniTest::Unit::TestCase
   def test_default_message_on_error
     test_user = TestUser.new(:email => "invalid_email@")
     refute test_user.valid?
-    assert test_user.errors[:email].include?("is invalid")
+    assert test_user.errors[:email].include?("is improperly formatted")
   end
 
   def test_custom_message_on_error
     test_user = TestUserWithMessage.new(:email => "invalid_email@")
     refute test_user.valid?
-    assert test_user.errors[:email].include?("is not formatted properly")
+    assert test_user.errors[:email].include?("is not well formatted")
   end
 
   def test_nil_email_when_allow_nil_option_is_not_set
