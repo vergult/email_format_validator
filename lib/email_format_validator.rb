@@ -26,7 +26,7 @@ class EmailFormatValidator < ActiveModel::EachValidator
       record.errors.add(
         attribute,
         options[:message] || I18n.t(:improperly_formatted,
-                                    :scope    => "activerecord.errors.models.#{record.class.name.underscore}.attributes.#{attribute}",
+                                    :scope    => "#{record.class.i18n_scope}.errors.models.#{record.class.model_name.i18n_key}.attributes.#{attribute}",
                                     :default => "is improperly formatted")
       )
     end
