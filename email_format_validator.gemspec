@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "email_format_validator"
-  s.version     = "1.0.2"
+  s.version     = "1.0.3"
   s.authors     = ["Axel Vergult"]
   s.email       = ["axel.vergult@gmail.com"]
   s.homepage    = "https://github.com/episko/email_format_validator"
