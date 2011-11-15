@@ -3,26 +3,73 @@
 require_relative 'test_helper'
 
 class TestUser < TestModel
-  validates :email, :email_format => true
+  validates :email, email_format: true
 end
 
 class TestUserWithRfcCompliantEmail < TestModel
-  validates :email, :email_format => { :rfc => true }
+  validates :email, email_format: { rfc: true }
 end
 
 class TestUserAllowsNilToTrue < TestModel
-  validates :email, :email_format => { :allow_nil => true }
+  validates :email, email_format: { allow_nil: true }
 end
 
 class TestUserAllowsNilToFalse < TestModel
-  validates :email, :email_format => { :allow_nil => false }
+  validates :email, email_format: { allow_nil: false }
 end
 
 class TestUserWithMessage < TestModel
-  validates :email, :email_format => { :message => 'is not well formatted' }
+  validates :email, email_format: { message: 'is not well formatted' }
 end
 
 class TestEmailFormatValidator < MiniTest::Unit::TestCase
+
+  def test_valid_emails
+    valid_emails.each { |email| assert TestUser.new(email: email).valid? }
+  end
+
+  def test_invalid_emails
+    invalid_emails.each { |email| refute TestUser.new(email: email).valid? }
+  end
+
+  def test_valid_emails_with_rfc_compliant
+    rfc_valid_emails.each { |email| assert TestUserWithRfcCompliantEmail.new(email: email).valid? }
+  end
+
+  def test_invalid_emails_with_rfc_compliant
+    rfc_invalid_emails.each { |email| refute TestUserWithRfcCompliantEmail.new(email: email).valid? }
+  end
+
+  def test_default_message_on_error
+    test_user = TestUser.new(email: "invalid_email@")
+    refute test_user.valid?
+    assert test_user.errors[:email].include?("is improperly formatted")
+  end
+
+  def test_custom_message_on_error
+    test_user = TestUserWithMessage.new(email: "invalid_email@")
+    refute test_user.valid?
+    assert test_user.errors[:email].include?("is not well formatted")
+  end
+
+  def test_nil_email_when_allow_nil_option_is_not_set
+    refute TestUser.new(email: nil).valid?
+  end
+
+  def test_nil_email_when_allow_nil_option_is_set_to_true
+    assert TestUserAllowsNilToTrue.new(email: nil).valid?
+  end
+
+  def test_nil_email_when_allow_nil_option_is_set_to_false
+    refute TestUserAllowsNilToFalse.new(email: nil).valid?
+  end
+
+  #######################
+  ### Private methods ###
+  #######################
+
+  private
+
   def rfc_valid_emails
     [
       'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@letters-in-local.org',
@@ -151,46 +198,6 @@ class TestEmailFormatValidator < MiniTest::Unit::TestCase
       'another-invalid-ip@127.0.0.256',
       'IP-and-port@127.0.0.1:25'
     ]
-  end
-
-  def test_valid_emails
-    valid_emails.each { |email| assert TestUser.new(:email => email).valid? }
-  end
-
-  def test_invalid_emails
-    invalid_emails.each { |email| refute TestUser.new(:email => email).valid? }
-  end
-
-  def test_valid_emails_with_rfc_compliant
-    rfc_valid_emails.each { |email| assert TestUserWithRfcCompliantEmail.new(:email => email).valid? }
-  end
-
-  def test_invalid_emails_with_rfc_compliant
-    rfc_invalid_emails.each { |email| refute TestUserWithRfcCompliantEmail.new(:email => email).valid? }
-  end
-
-  def test_default_message_on_error
-    test_user = TestUser.new(:email => "invalid_email@")
-    refute test_user.valid?
-    assert test_user.errors[:email].include?("is improperly formatted")
-  end
-
-  def test_custom_message_on_error
-    test_user = TestUserWithMessage.new(:email => "invalid_email@")
-    refute test_user.valid?
-    assert test_user.errors[:email].include?("is not well formatted")
-  end
-
-  def test_nil_email_when_allow_nil_option_is_not_set
-    refute TestUser.new(:email => nil).valid?
-  end
-
-  def test_nil_email_when_allow_nil_option_is_set_to_true
-    assert TestUserAllowsNilToTrue.new(:email => nil).valid?
-  end
-
-  def test_nil_email_when_allow_nil_option_is_set_to_false
-    refute TestUserAllowsNilToFalse.new(:email => nil).valid?
   end
 
 end
